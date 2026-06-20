@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>차근차근 의자 공부 (AAC & 착석 훈련)</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', dotum, sans-serif;
+            background-color: #f0f7f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2e7d32;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        h2 {
+            color: #1565c0;
+            font-size: 18px;
+            margin-top: 0;
+        }
+        .guide-box {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            border-left: 5px solid #4caf50;
+        }
+        .timer-section {
+            background: #fff9c4;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px dashed #fbc02d;
+        }
+        .time-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #f57f17;
+            margin: 10px 0;
+        }
+        .btn {
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 5px;
+            transition: 0.2s;
+        }
+        .btn-start { background-color: #4caf50; color: white; }
+        .btn-stop { background-color: #e53935; color: white; }
+        .btn-level { background-color: #2196f3; color: white; }
+        .btn:hover { opacity: 0.9; }
+        
+        .aac-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .aac-card {
+            background: #ffffff;
+            border: 3px solid #cfd8dc;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.1s, border-color 0.2s;
+        }
+        .aac-card:hover {
+            transform: scale(1.03);
+            border-color: #1e88e5;
+        }
+        .aac-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        .aac-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: #37474f;
+        }
+        .reward-banner {
+            display: none;
+            background-color: #e1f5fe;
+            border: 2px solid #0288d1;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #01579b;
+            animation: bounce 0.5s infinite alternate;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🪑 차근차근 의자 공부</h1>
+    <h2>행동지도 & AAC 수업 자료</h2>
+
+    <div class="guide-box">
+        <strong>💡 선생님을 위한 쉬운 지도 계획:</strong><br>
+        1. <strong>목표:</strong> 억지로 앉히기 대신, 시각 타이머와 AAC로 스스로 앉는 시간 늘리기<br>
+        2. <strong>단계별 늘리기:</strong> 처음엔 1분으로 시작해서 성공하면 2분, 3분으로 늘려주세요.<br>
+        3. <strong>대체행동 제공:</strong> 힘들 때는 도망치는 대신 아래 AAC 버튼을 눌러 <strong>"쉴래요"</strong>라고 말하도록 유도합니다.<br>
+        4. <strong>강화:</strong> 타이머가 끝나면 즉시 엄청난 칭찬과 좋아하는 보상을 주세요!
+    </div>
+
+    <div class="timer-section">
+        <h3 style="margin:0; color:#5d4037;">⏳ 우리 앉아있는 시간</h3>
+        <div id="timeDisplay" class="time-display">01:00</div>
+        <div>
+            <button class="btn btn-level" onclick="changeGoal(60)">1분 앉기</button>
+            <button class="btn btn-level" onclick="changeGoal(120)">2분 앉기</button>
+            <button class="btn btn-level" onclick="changeGoal(180)">3분 앉기</button>
+        </div>
+        <div style="margin-top: 15px;">
+            <button class="btn btn-start" onclick="startTimer()">▶ 시작</button>
+            <button class="btn btn-stop" onclick="stopTimer()">■ 멈춤</button>
+        </div>
+    </div>
+
+    <h3 style="text-align: left; margin-left: 5px; color:#37474f;">👇 누르면 소리가 나요 (학생용 AAC)</h3>
+    <div class="aac-grid">
+        <div class="aac-card" onclick="speak('의자 앉아')">
+            <div class="aac-icon">🪑</div>
+            <div class="aac-text">의자 앉아</div>
+        </div>
+        <div class="aac-card" onclick="speak('공부 하자')">
+            <div class="aac-icon">✏️</div>
+            <div class="aac-text">공부 하자</div>
+        </div>
+        <div class="aac-card" onclick="speak('잠깐 쉴래요')" style="border-color: #ffb74d;">
+            <div class="aac-icon">🛋️</div>
+            <div class="aac-text">잠깐 쉴래요</div>
+        </div>
+        <div class="aac-card" onclick="speak('다 했다')" style="border-color: #81c784;">
+            <div class="aac-icon">🙌</div>
+            <div class="aac-text">다 했다</div>
+        </div>
+    </div>
+
+    <div id="rewardBanner" class="reward-banner">
+        🎉 와아! 다 앉았다! 최고야! 🍇🎈 (보상 주기)
+    </div>
+</div>
+
+<script>
+    let timer;
+    let timeLeft = 60; 
+    let isRunning = false;
+
+    // 음성(TTS) 재생 기능
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel(); // 현재 재생중인 소리 끄기
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ko-KR';
+            utterance.rate = 0.9; // 조금 천천히 명확하게
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("이 브라우저는 음성을 지원하지 않습니다.");
+        }
+    }
+
+    // 시간 표시 업데이트
+    function updateDisplay() {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        document.getElementById('timeDisplay').innerText = `${minutes}:${seconds}`;
+    }
+
+    // 목표 시간 바꾸기
+    function changeGoal(seconds) {
+        clearInterval(timer);
+        isRunning = false;
+        timeLeft = seconds;
+        updateDisplay();
+        document.getElementById('rewardBanner').style.display = 'none';
+        speak(Math.floor(seconds/60) + "분 공부");
+    }
+
+    // 타이머 시작
+    function startTimer() {
+        if (isRunning) return;
+        isRunning = true;
+        document.getElementById('rewardBanner').style.display = 'none';
+        
+        speak("앉아서 시작");
+
+        timer = setInterval(() => {
+            timeLeft--;
+            updateDisplay();
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                isRunning = false;
+                document.getElementById('rewardBanner').style.display = 'block';
+                speak("다 했다 의자 끝"); // 학생이 성공을 인지하도록 2어절 음성 출력
+            }
+        }, 1000);
+    }
+
+    // 타이머 멈춤
+    function stopTimer() {
+        clearInterval(timer);
+        isRunning = false;
+        speak("잠깐 멈춤");
+    }
+</script>
+
+</body>
+</html>
